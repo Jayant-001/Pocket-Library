@@ -1,6 +1,8 @@
 package com.jayant.pocketlibrary.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -45,13 +47,17 @@ public class HomeFragment extends Fragment {
         textSem5 = view.findViewById(R.id.text_sem_5);
         textSem6 = view.findViewById(R.id.text_sem_6);
 
+        SharedPreferences preferences = view.getContext().getSharedPreferences("app_state", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
 
 
         textSem1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), SubjectActivity.class);
-                intent.putExtra("sem_name", "First sem");
+//                intent.putExtra("sem_name", "First sem");
+                editor.putString("sem_name", "First sem");
+                editor.apply();
                 startActivity(intent);
             }
         });
@@ -60,7 +66,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), SubjectActivity.class);
-                intent.putExtra("sem_name", "Second sem");
+//                intent.putExtra("sem_name", "Second sem");
+                editor.putString("sem_name", "Second sem");
+                editor.apply();
                 startActivity(intent);
             }
         });
@@ -69,7 +77,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), SubjectActivity.class);
-                intent.putExtra("sem_name", "Third sem");
+//                intent.putExtra("sem_name", "Third sem");
+                editor.putString("sem_name", "Third sem");
+                editor.apply();
                 startActivity(intent);
             }
         });
@@ -78,7 +88,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), SubjectActivity.class);
-                intent.putExtra("sem_name", "Fourth sem");
+//                intent.putExtra("sem_name", "Fourth sem");
+                editor.putString("sem_name", "Fourth sem");
+                editor.apply();
                 startActivity(intent);
             }
         });
@@ -87,7 +99,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), SubjectActivity.class);
-                intent.putExtra("sem_name", "Fifth sem");
+//                intent.putExtra("sem_name", "Fifth sem");
+                editor.putString("sem_name", "Fifth sem");
+                editor.apply();
                 startActivity(intent);
             }
         });
@@ -96,7 +110,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), SubjectActivity.class);
-                intent.putExtra("sem_name", "Sixth sem");
+//                intent.putExtra("sem_name", "Sixth sem");
+                editor.putString("sem_name", "Sixth sem");
+                editor.apply();
                 startActivity(intent);
             }
         });

@@ -44,7 +44,7 @@ public class ShowBook extends AppCompatActivity {
         pd.setMessage("Opening...");
 
 
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient() {
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -67,8 +67,8 @@ public class ShowBook extends AppCompatActivity {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
-        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
-        webView.setWebViewClient(new Callback());
+//        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+//        webView.setWebViewClient(new Callback());
 
 //        pdfWebView.getSettings().getJavaScriptEnabled();
         webView.loadUrl("https://docs.google.com/viewer?url=" + url);
@@ -77,11 +77,4 @@ public class ShowBook extends AppCompatActivity {
 
     }
 
-}
- class Callback extends WebViewClient {
-    @Override
-    public boolean shouldOverrideUrlLoading(
-            WebView view, String url) {
-        return(false);
-    }
 }

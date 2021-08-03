@@ -3,7 +3,9 @@ package com.jayant.pocketlibrary.ebooks;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,8 +29,13 @@ public class SubjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject);
 
-        String sem = getIntent().getStringExtra("sem_name");
-//        Log.d("jayant", sem);
+        SharedPreferences preferences = getSharedPreferences("app_state", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        String sem = preferences.getString("sem_name", "none");
+
+//        String sem = getIntent().getStringExtra("sem_name");
+        Log.d("jayant", sem);
 
         subjectListView = findViewById(R.id.list_subject);
         subList = new ArrayList<>();
@@ -102,8 +109,10 @@ public class SubjectActivity extends AppCompatActivity {
 //                Log.d("jayant", "sub " + textView.getText().toString());
 
                 Intent intent = new Intent(getApplicationContext(), BooksActivity.class);
-                intent.putExtra("get_sem", sem);
-                intent.putExtra("get_subject", textView.getText().toString());
+//                intent.putExtra("get_sem", sem);
+//                intent.putExtra("get_subject", textView.getText().toString());
+                editor.putString("get_subject", textView.getText().toString());
+                editor.apply();
                 startActivity(intent);
 
             }

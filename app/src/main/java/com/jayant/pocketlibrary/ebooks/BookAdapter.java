@@ -62,6 +62,7 @@ public class BookAdapter extends FirebaseRecyclerAdapter<PdfData, BookAdapter.Pd
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 holder.downloadBtn.getContext().startActivity(intent);
+                ((Activity)holder.downloadBtn.getContext()).finish();
             }
         });
 

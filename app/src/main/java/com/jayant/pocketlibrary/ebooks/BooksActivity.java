@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -23,8 +24,12 @@ public class BooksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_books);
 
-        String setSem = getIntent().getStringExtra("get_sem");
-        String setSub = getIntent().getStringExtra("get_subject");
+        SharedPreferences sharedPreferences = getSharedPreferences("app_state", MODE_PRIVATE);
+        String setSem = sharedPreferences.getString("sem_name", "none");
+        String setSub = sharedPreferences.getString("get_subject", "none");
+
+//        String setSem = getIntent().getStringExtra("get_sem");
+//        String setSub = getIntent().getStringExtra("get_subject");
 
         Log.d("jayant", setSem);
         Log.d("jayant", setSub);
