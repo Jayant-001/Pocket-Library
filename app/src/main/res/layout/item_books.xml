@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/light_border"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/show_book_title"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="Book Title"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/show_book_desc"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="Book Description"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/show_book_title" />
+
+        <TextView
+            android:id="@+id/show_book_lang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+
+            android:text="Language"
+            app:layout_constraintTop_toBottomOf="@id/show_book_desc"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <ImageView
+            android:id="@+id/view_book_btn"
+            android:layout_width="100dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_eye"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/show_book_lang" />
+
+        <ImageView
+            android:id="@+id/delete_book_btn"
+            android:layout_width="80dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_delete"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/download_book_btn"
+            app:layout_constraintStart_toEndOf="@+id/view_book_btn"
+            app:layout_constraintTop_toBottomOf="@+id/show_book_lang" />
+
+        <ImageView
+            android:id="@+id/download_book_btn"
+            android:layout_width="100dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/border"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_download"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/show_book_lang" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
