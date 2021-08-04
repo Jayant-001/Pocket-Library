@@ -52,6 +52,13 @@ public class BookAdapter extends FirebaseRecyclerAdapter<PdfData, BookAdapter.Pd
         holder.showLang.setText(model.getLang());
         fAuth = FirebaseAuth.getInstance();
 
+        if(!model.getTitle().isEmpty()) {
+            Log.d("jayant", "empty--------------------" + model.getTitle());
+        }
+        else {
+            Log.d("jayant", model.getTitle()+ " ---------------------");
+        }
+
         holder.showBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

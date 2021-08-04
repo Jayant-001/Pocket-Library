@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.jayant.pocketlibrary.R;
 
@@ -18,6 +19,8 @@ public class BooksActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private BookAdapter adapter;
     private ProgressDialog pd;
+
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class BooksActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         pd.dismiss();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("cse_books");
 
     }
 

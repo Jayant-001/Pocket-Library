@@ -139,7 +139,7 @@ public class FormActivity extends AppCompatActivity {
                     public void onFailure(@NonNull @NotNull Exception e) {
 
                         Toast.makeText(FormActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-                        Log.d("jayant", e.toString());
+//                        Log.d("jayant", e.toString());
                     }
                 });
 

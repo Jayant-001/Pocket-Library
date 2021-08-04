@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthSettings;
 import com.jayant.pocketlibrary.*;
+import com.jayant.pocketlibrary.ebooks.UploadEbooks;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 startActivity(new Intent(getApplicationContext(), SignupActivity.class));
+                finish();
 
             }
         });
@@ -83,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onSuccess(AuthResult authResult) {
 
                                 Toast.makeText(LoginActivity.this, "Login successfully", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), UploadEbooks.class));
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {

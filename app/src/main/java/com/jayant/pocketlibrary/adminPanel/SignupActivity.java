@@ -22,12 +22,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.jayant.pocketlibrary.*;
+import com.jayant.pocketlibrary.ebooks.UploadEbooks;
 
 import org.jetbrains.annotations.NotNull;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private TextView signupBtn;
+    private TextView signupBtn, termCond;
 
     private EditText inputName, inputEmail, inputPassword, inputConfPassword;
     private ImageView googleSignup, fbSignup, twitterSignup;
@@ -51,6 +52,7 @@ public class SignupActivity extends AppCompatActivity {
         googleSignup = findViewById(R.id.google_signup);
         fbSignup = findViewById(R.id.fb_signup);
         twitterSignup = findViewById(R.id.twitter_signup);
+        termCond = findViewById(R.id.signup_term);
 
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +106,8 @@ public class SignupActivity extends AppCompatActivity {
                             public void onSuccess(AuthResult authResult) {
 
                                 Toast.makeText(SignupActivity.this, "Account created successfully.", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), UploadEbooks.class));
+                                finish();
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -175,6 +179,26 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        termCond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Our Terms & Conditions");
+                builder.setMessage("Chill bro your data is save");
+                builder.setCancelable(true);
+                builder.show();
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
             }
         });
 
