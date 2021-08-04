@@ -28,15 +28,37 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/about_dev"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textView3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:textSize="24sp"
+        android:layout_height="wrap_content"
+        android:text="About Developers"/>
+
+    <View
+        android:id="@+id/div_bar1"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/about_dev"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginHorizontal="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="1dp"
+        android:background="#66000000"/>
+
     <LinearLayout
         android:id="@+id/layout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView3">
+        app:layout_constraintTop_toBottomOf="@id/div_bar1">
 
 
         <TextView
@@ -52,7 +74,30 @@
             android:text="[App Developer]"
             android:textSize="24sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C S E"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-2021"
+            android:textSize="24sp" />
+
     </LinearLayout>
+
+    <View
+        android:id="@+id/div_bar"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/layout2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="1dp"
+        android:background="#66000000"/>
 
 
     <LinearLayout
@@ -60,10 +105,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout2">
+        app:layout_constraintTop_toBottomOf="@id/div_bar">
 
 
         <TextView
@@ -79,18 +124,43 @@
             android:text="[UI Designer]"
             android:textSize="24sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C S E"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-2021"
+            android:textSize="24sp" />
+
     </LinearLayout>
+
+
+    <View
+        android:id="@+id/div_bar2"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/layout3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="1dp"
+        android:background="#66000000"/>
+
 
     <LinearLayout
         android:id="@+id/layout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout3">
+        app:layout_constraintTop_toBottomOf="@id/div_bar2">
 
         <ImageView
             android:layout_width="wrap_content"
