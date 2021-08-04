@@ -16,12 +16,24 @@ import android.widget.TextView;
 
 import com.jayant.pocketlibrary.R;
 import com.jayant.pocketlibrary.ebooks.SubjectActivity;
+import com.jayant.pocketlibrary.quoteApi.ApiInterface;
+import com.jayant.pocketlibrary.quoteApi.QuoteData;
+import com.jayant.pocketlibrary.quoteApi.RetrofitInstance;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
-    private TextView textSem1, textSem2, textSem3, textSem4, textSem5, textSem6;
+    private TextView textSem1, textSem2, textSem3, textSem4, textSem5, textSem6, quoteText;
+
+    ApiInterface apiInterface;
+    List<QuoteData> list;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -46,6 +58,37 @@ public class HomeFragment extends Fragment {
         textSem4 = view.findViewById(R.id.text_sem_4);
         textSem5 = view.findViewById(R.id.text_sem_5);
         textSem6 = view.findViewById(R.id.text_sem_6);
+
+        quoteText = view.findViewById(R.id.show_quote);
+
+        apiInterface = RetrofitInstance.getRetrofit().create(ApiInterface.class);
+        list = new ArrayList<>();
+
+
+        apiInterface.getQuote().enqueue(new Callback<List<QuoteData>>() {
+            @Override
+            public void onResponse(Call<List<QuoteData>> call, Response<List<QuoteData>> response) {
+
+                if (response.body().size() > 0) {
+                    list.addAll(response.body());
+
+                    Random rand = new Random();
+                    int i = rand.nextInt(list.size()-1);
+                    String quote = list.get(i).getText();
+
+                    quoteText.setText(quote);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<QuoteData>> call, Throwable t) {
+
+            }
+        });
+
+
+
 
         SharedPreferences preferences = view.getContext().getSharedPreferences("app_state", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

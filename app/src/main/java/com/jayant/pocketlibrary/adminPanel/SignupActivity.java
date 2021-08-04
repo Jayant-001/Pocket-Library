@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,9 +27,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private Button signupBtn;
+    private TextView signupBtn;
 
     private EditText inputName, inputEmail, inputPassword, inputConfPassword;
+    private ImageView googleSignup, fbSignup, twitterSignup;
 
     private FirebaseAuth fAuth;
 
@@ -36,13 +41,16 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         signupBtn = findViewById(R.id.signup_btn);
-        signupBtn.setBackgroundColor(R.color.custom_blue);
         fAuth = FirebaseAuth.getInstance();
 
         inputName = findViewById(R.id.signup_input_name);
         inputEmail = findViewById(R.id.signup_input_email);
         inputPassword = findViewById(R.id.signup_input_password);
         inputConfPassword = findViewById(R.id.signup_input_conf_password);
+
+        googleSignup = findViewById(R.id.google_signup);
+        fbSignup = findViewById(R.id.fb_signup);
+        twitterSignup = findViewById(R.id.twitter_signup);
 
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +60,43 @@ public class SignupActivity extends AppCompatActivity {
                 String email = inputEmail.getText().toString();
                 String pass = inputPassword.getText().toString();
                 String confPass = inputConfPassword.getText().toString();
+
+
+                if(name.isEmpty()) {
+                    inputName.setError("Name is required");
+                    Toast.makeText(SignupActivity.this, "Please input Name", Toast.LENGTH_SHORT).show();
+                    inputName.requestFocus();
+                    return;
+                }
+
+                if(email.isEmpty()) {
+                    inputEmail.setError("Email is required");
+                    Toast.makeText(SignupActivity.this, "Please input Email", Toast.LENGTH_SHORT).show();
+                    inputEmail.requestFocus();
+                    return;
+                }
+
+                if(pass.isEmpty()) {
+                    inputPassword.setError("Password is required");
+                    Toast.makeText(SignupActivity.this, "Please input Password", Toast.LENGTH_SHORT).show();
+                    inputPassword.requestFocus();
+                    return;
+                }
+
+                if(confPass.isEmpty()) {
+                    inputConfPassword.setError("Confirm password is required");
+                    Toast.makeText(SignupActivity.this, "Please input Confirm Password", Toast.LENGTH_SHORT).show();
+                    inputConfPassword.requestFocus();
+                    return;
+                }
+
+                if(!pass.equals(confPass)) {
+                    inputConfPassword.setError("Confirm password is not same");
+                    Toast.makeText(SignupActivity.this, "Confirm password doesn't match", Toast.LENGTH_SHORT).show();
+                    inputConfPassword.requestFocus();
+                    return;
+                }
+
 
                 fAuth.createUserWithEmailAndPassword(email, pass).
                         addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -73,6 +118,65 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
+
+        googleSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Currently this feature is not available.");
+                builder.setCancelable(true);
+                builder.show();
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+            }
+        });
+
+
+        fbSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Currently this feature is not available.");
+                builder.setCancelable(true);
+                builder.show();
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+            }
+        });
+
+
+        twitterSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Currently this feature is not available.");
+                builder.setCancelable(true);
+                builder.show();
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+
+            }
+        });
 
     }
 }

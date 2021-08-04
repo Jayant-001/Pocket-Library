@@ -3,11 +3,14 @@ package com.jayant.pocketlibrary.adminPanel;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +25,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView loginRegisterText, loginBtn;
+    private TextView loginRegisterText, loginBtn, termAndCond;
     private EditText inputEmail, inputPassword;
+    private ImageView googleLogin, fbLogin, twitterLogin;
     private FirebaseAuth fAuth;
 
 
@@ -32,11 +36,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        googleLogin = findViewById(R.id.google_login);
+        fbLogin = findViewById(R.id.fb_login);
+        twitterLogin = findViewById(R.id.twitter_login);
+
         loginRegisterText = findViewById(R.id.login_register_text);
         inputEmail = findViewById(R.id.signup_input_email);
         inputPassword = findViewById(R.id.signup_input_password);
         loginBtn = findViewById(R.id.login_btn);
         fAuth = FirebaseAuth.getInstance();
+
+        termAndCond = findViewById(R.id.termAndCond);
 
         loginRegisterText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,5 +97,84 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        termAndCond.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Our Terms & Conditions");
+                builder.setMessage("Chill bro your data is save");
+                builder.setCancelable(true);
+                builder.show();
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+
+            }
+        });
+
+        googleLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Currently this feature is not available.");
+                builder.setCancelable(true);
+                builder.show();
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+            }
+        });
+
+        fbLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Currently this feature is not available.");
+                builder.setCancelable(true);
+                builder.show();
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+            }
+        });
+
+        twitterLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Currently this feature is not available.");
+                builder.setCancelable(true);
+                builder.show();
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+            }
+        });
     }
 }

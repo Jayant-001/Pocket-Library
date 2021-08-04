@@ -6,15 +6,15 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.jayant.pocketlibrary.DeveloperActivity;
 import com.jayant.pocketlibrary.FormActivity;
-import com.jayant.pocketlibrary.MainActivity;
 import com.jayant.pocketlibrary.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -30,6 +30,7 @@ public class UserFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private LinearLayout devInfo;
     View userLogoutBtn;
     private FirebaseAuth firebaseAuth;
 
@@ -67,6 +68,8 @@ public class UserFragment extends Fragment {
         userLogoutBtn = view.findViewById(R.id.user_logout_btn);
         firebaseAuth = FirebaseAuth.getInstance();
 
+        devInfo = view.findViewById(R.id.dev_info);
+
         topUserName = view.findViewById(R.id.top_user_name);
         userName = view.findViewById(R.id.user_name);
         userEnroll = view.findViewById(R.id.user_enroll);
@@ -75,14 +78,11 @@ public class UserFragment extends Fragment {
 
 
 
-
-
         sharedPreferences = this.getActivity().getSharedPreferences("user_data", MODE_PRIVATE);
         String name = sharedPreferences.getString("user_name", "none");
         String enroll = sharedPreferences.getString("user_enroll", "none");
         String sem = sharedPreferences.getString("selected_sem", "none");
         String college = sharedPreferences.getString("user_college", "none");
-
 
 
         userLogoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +105,15 @@ public class UserFragment extends Fragment {
         userSem.setText(sem);
         userCollege.setText(college);
 
+
+        devInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(getContext(), DeveloperActivity.class));
+
+            }
+        });
 
         return view;
     }
