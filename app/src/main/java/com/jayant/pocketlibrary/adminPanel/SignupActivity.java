@@ -99,6 +99,8 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
+                Toast.makeText(SignupActivity.this, "Signing Up, Please wait...", Toast.LENGTH_SHORT).show();
+
 
                 fAuth.createUserWithEmailAndPassword(email, pass).
                         addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -106,7 +108,8 @@ public class SignupActivity extends AppCompatActivity {
                             public void onSuccess(AuthResult authResult) {
 
                                 Toast.makeText(SignupActivity.this, "Account created successfully.", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), UploadEbooks.class));
+                                fAuth.signOut();
+                                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                                 finish();
 
                             }

@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView loginRegisterText, loginBtn, termAndCond;
+    private TextView loginBtn, termAndCond;
     private EditText inputEmail, inputPassword;
     private ImageView googleLogin, fbLogin, twitterLogin;
     private FirebaseAuth fAuth;
@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         fbLogin = findViewById(R.id.fb_login);
         twitterLogin = findViewById(R.id.twitter_login);
 
-        loginRegisterText = findViewById(R.id.login_register_text);
         inputEmail = findViewById(R.id.signup_input_email);
         inputPassword = findViewById(R.id.signup_input_password);
         loginBtn = findViewById(R.id.login_btn);
@@ -49,15 +48,6 @@ public class LoginActivity extends AppCompatActivity {
 
         termAndCond = findViewById(R.id.termAndCond);
 
-        loginRegisterText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startActivity(new Intent(getApplicationContext(), SignupActivity.class));
-                finish();
-
-            }
-        });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +69,8 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                Toast.makeText(LoginActivity.this, "Please wait...", Toast.LENGTH_SHORT).show();
+
                 fAuth.signInWithEmailAndPassword(email, password)
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
@@ -93,11 +85,13 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailure(@NonNull @NotNull Exception e) {
 
                         Log.d("jayant", e.toString());
-                        Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(LoginActivity.this, "Incorrect username or password", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
+
 
         termAndCond.setOnClickListener(new View.OnClickListener() {
             @Override

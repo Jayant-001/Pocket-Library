@@ -1,5 +1,6 @@
 package com.jayant.pocketlibrary.fragments;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;

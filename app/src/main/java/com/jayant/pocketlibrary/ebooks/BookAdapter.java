@@ -6,6 +6,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +51,7 @@ public class BookAdapter extends FirebaseRecyclerAdapter<PdfData, BookAdapter.Pd
         holder.showTitle.setText(model.getTitle());
         holder.showDesc.setText(model.getDesc());
         holder.showLang.setText(model.getLang());
+        holder.showContributorName.setText(model.getContributorName());
         fAuth = FirebaseAuth.getInstance();
 
         if(!model.getTitle().isEmpty()) {
@@ -94,11 +96,18 @@ public class BookAdapter extends FirebaseRecyclerAdapter<PdfData, BookAdapter.Pd
             holder.delBtn.setVisibility(View.VISIBLE);
         }
 
+        SharedPreferences preferences = holder.delBtn.getContext().getSharedPreferences("user_data", Context.MODE_PRIVATE);
+        String branch = preferences.getString("branch", "none");
+
+
+
         // delete pdf ------------------------------------------------------------------------------
 
         holder.delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Log.d("jayant", "branch = ---- " + branch);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setMessage("Are your sure to delete this Book?");
@@ -110,13 +119,13 @@ public class BookAdapter extends FirebaseRecyclerAdapter<PdfData, BookAdapter.Pd
 
 
                         // delete book from storage
-                        FirebaseStorage.getInstance().getReference().child("cse_books").child(model.getTitle() + model.getDate() + "-" + model.getTime())
+                        FirebaseStorage.getInstance().getReference().child(branch).child(model.getTitle() + model.getDate() + "-" + model.getTime())
                                 .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
 
                                 // delete from database
-                                FirebaseDatabase.getInstance().getReference().child("cse_books").child(model.getSem()).child(model.getSub())
+                                FirebaseDatabase.getInstance().getReference().child(branch).child(model.getSem()).child(model.getSub())
                                         .child(getRef(position).getKey())
                                         .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -187,9 +196,8 @@ public class BookAdapter extends FirebaseRecyclerAdapter<PdfData, BookAdapter.Pd
 
     class PdfViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView showTitle, showDesc, showLang;
+        private TextView showTitle, showDesc, showLang, showContributorName;
         private ImageView showBtn, delBtn, downloadBtn;
-//        private FirebaseAuth fAuth;
 
         public PdfViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -197,12 +205,12 @@ public class BookAdapter extends FirebaseRecyclerAdapter<PdfData, BookAdapter.Pd
             showTitle = itemView.findViewById(R.id.show_book_title);
             showDesc = itemView.findViewById(R.id.show_book_desc);
             showLang = itemView.findViewById(R.id.show_book_lang);
+            showContributorName = itemView.findViewById(R.id.show_contributor_name);
 
             showBtn = itemView.findViewById(R.id.view_book_btn);
             delBtn = itemView.findViewById(R.id.delete_book_btn);
             downloadBtn = itemView.findViewById(R.id.download_book_btn);
 
-//            fAuth = FirebaseAuth.getInstance();
 
         }
     }

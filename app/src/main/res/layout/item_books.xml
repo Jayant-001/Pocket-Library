@@ -33,18 +33,41 @@
             android:layout_height="wrap_content"
             android:text="Book Description"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/show_book_title" />
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/show_book_desc"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Contributed By - "/>
+
+            <TextView
+                android:id="@+id/show_contributor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold|italic"
+                android:text="Jayant Kumar"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/show_book_lang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-
             android:text="Language"
-            app:layout_constraintTop_toBottomOf="@id/show_book_desc"
+            app:layout_constraintTop_toBottomOf="@id/layout"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <ImageView

@@ -8,30 +8,40 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:paddingBottom="80dp"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:paddingBottom="80dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="200dp"
             android:background="@drawable/user_bg"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/user_profile"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.16" />
+
             <TextView
                 android:id="@+id/top_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="8dp"
                 android:text="Veronica"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/img1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -40,7 +50,7 @@
             android:id="@+id/user_logout_btn"
             android:layout_width="257dp"
             android:layout_height="70dp"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="165dp"
             android:background="@drawable/logout_bg"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -52,37 +62,38 @@
             android:id="@+id/layout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="80dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_logout_btn" >
+            app:layout_constraintTop_toBottomOf="@id/user_logout_btn">
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/person_icon2" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="6dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name"
-                    android:textSize="25dp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
                     android:text="Jayant Kumar Gupta"
-                    android:textSize="24dp" />
+                    android:textSize="20dp" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -95,37 +106,38 @@
             android:id="@+id/layout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
             android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="80dp"
             app:layout_constraintTop_toBottomOf="@id/layout1">
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/ig_enroll" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="6dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Enrollment No."
-                    android:textSize="25dp"
+                    android:text="Email ID"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/user_enroll"
+                    android:id="@+id/user_email"
                     android:layout_width="wrap_content"
+                    android:layout_marginStart="3dp"
                     android:layout_height="wrap_content"
-                    android:text="E18483335500016"
-                    android:textSize="24dp" />
+                    android:text="jayant@engineer.com"
+                    android:textSize="20dp" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -138,37 +150,45 @@
             android:id="@+id/layout3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
             android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="80dp"
             app:layout_constraintTop_toBottomOf="@id/layout2">
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/ig_college" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="6dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Semester"
-                    android:textSize="25dp"
+                    android:text="Branch"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/user_sem"
+                    android:id="@+id/user_branch"
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_height="wrap_content"
+                    android:text="C S E"
+                    android:textSize="20dp" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2nd semester"
-                    android:textSize="24dp" />
+                    android:text="[ To change branch Logout and \nRegister again ]"
+                    android:layout_marginStart="3dp"
+                    android:textSize="14sp" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -181,56 +201,120 @@
             android:id="@+id/layout4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
             android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="80dp"
             app:layout_constraintTop_toBottomOf="@id/layout3">
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/ig_college" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="6dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="College"
-                    android:textSize="25dp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_marginStart="3dp"
                     android:id="@+id/user_college"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sant Ravidas"
-                    android:textSize="24dp" />
-
+                    android:textSize="20dp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+        </LinearLayout>
+
+        <View
+            android:id="@+id/div_bar3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="10dp"
+            android:background="#66000000"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout4" />
+
+        <LinearLayout
+            android:id="@+id/add_admin_layout"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/dev_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/div_bar3">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_add" />
+
+            <TextView
+                android:id="@+id/user_admin_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_another_user"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
 
         </LinearLayout>
 
         <LinearLayout
-            app:layout_constraintTop_toBottomOf="@id/layout4"
-            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/app_info_layout"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/dev_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_admin_layout">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_info" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_info"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/dev_info"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/dev_bg"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_info_layout">
 
             <ImageView
                 android:layout_width="35dp"
@@ -246,6 +330,7 @@
                 android:textSize="24sp" />
 
         </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

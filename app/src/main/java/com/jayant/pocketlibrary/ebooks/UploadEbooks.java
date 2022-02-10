@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,14 +43,14 @@ import java.util.Calendar;
 public class UploadEbooks extends AppCompatActivity {
 
     private TextView selectPdf;
-    private EditText pdfTitle, pdfDesc;
-    private Spinner spSem, spSub, spLang;
+    private EditText pdfTitle, pdfDesc, inputContributorName;
+    private Spinner spSem, spSub, spLang, spBranch;
     private Button uploadPdf;
 
-    private String title, desc, sem, sub, lang;
+    private String title, desc, sem, sub, lang, branch, selectedBranch, selectedSem, selectedSub, contributorName;
 
-    private ArrayList<String> listSem, firstSemSub, secondSemSub, thirdSemSub, fourthSemSub, fifthSemSub, sixthSemSub, listLang, defaultSub;
-    private ArrayAdapter<String> adapter_sem, adapter_sub, adapter_lang;
+    private ArrayList<String> semList, firstSemSub, secondSemSub, thirdSemSub, fourthSemSub, fifthSemSub, sixthSemSub, listLang, defaultSem, defaultSub, branchList;
+    private ArrayAdapter<String> adapterLang, branchAdapter, semAdapter, subAdapter;
 
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
@@ -63,134 +64,88 @@ public class UploadEbooks extends AppCompatActivity {
 
         pdfTitle = findViewById(R.id.input_pdf_title);
         pdfDesc = findViewById(R.id.input_pdf_desc);
+        inputContributorName = findViewById(R.id.input_contributor_name);
 
         spSem = findViewById(R.id.sp_sem);
         spSub = findViewById(R.id.sp_subject);
         spLang = findViewById(R.id.sp_language);
+        spBranch = findViewById(R.id.sp_branch);
 
         uploadPdf = findViewById(R.id.upload_pdf_btn);
         uploadPdf.setEnabled(false);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("cse_books");
-        storageReference = FirebaseStorage.getInstance().getReference("cse_books");
+        firstSemSub = new ArrayList<>();
+        secondSemSub = new ArrayList<>();
+        thirdSemSub = new ArrayList<>();
+        fourthSemSub = new ArrayList<>();
+        fifthSemSub = new ArrayList<>();
+        sixthSemSub = new ArrayList<>();
 
-        // Semester list----------------------------------------------------------------------------
-        listSem = new ArrayList<>();
-        listSem.add("Select semester");
-        listSem.add("First sem");
-        listSem.add("Second sem");
-        listSem.add("Third sem");
-        listSem.add("Fourth sem");
-        listSem.add("Fifth sem");
-        listSem.add("Sixth sem");
+        defaultSem = new ArrayList<>();
+        defaultSem.add("Select branch first");
 
         defaultSub = new ArrayList<>();
         defaultSub.add("Select sem first");
-
-        // First Semester list ---------------------------------------------------------------------
-        firstSemSub = new ArrayList<>();
-        firstSemSub.add("Select subject");
-        firstSemSub.add("Math-I");
-        firstSemSub.add("Communication-I");
-        firstSemSub.add("Physics-I");
-        firstSemSub.add("Chemistry");
-        firstSemSub.add("F C I T");
-        firstSemSub.add("Technical Drawing");
-        firstSemSub.add("Workshop Practice");
-
-        // Second Sem list -------------------------------------------------------------------------
-        secondSemSub = new ArrayList<>();
-        secondSemSub.add("Select subject");
-        secondSemSub.add("Math-II");
-        secondSemSub.add("Physics-II");
-        secondSemSub.add("B E E E");
-        secondSemSub.add("Multimedia & Animation");
-        secondSemSub.add("Programming using C");
-        secondSemSub.add("O A T");
-
-        // Third sem list --------------------------------------------------------------------------
-        thirdSemSub = new ArrayList<>();
-        thirdSemSub.add("Select subject");
-        thirdSemSub.add("Math-III");
-        thirdSemSub.add("I & W T");
-        thirdSemSub.add("EVS");
-        thirdSemSub.add("D C C N");
-        thirdSemSub.add("DS using C");
-        thirdSemSub.add("Digital Electronic");
-
-        // Fourth sem list -------------------------------------------------------------------------
-        fourthSemSub = new ArrayList<>();
-        fourthSemSub.add("Select subject");
-        fourthSemSub.add("Communication-II");
-        fourthSemSub.add("D B M S");
-        fourthSemSub.add("OOP using Java");
-        fourthSemSub.add("O S");
-        fourthSemSub.add("E-com");
-        fourthSemSub.add("Energy Conservation");
-        fourthSemSub.add("U H V");
-
-        // Fifth sem list --------------------------------------------------------------------------
-        fifthSemSub = new ArrayList<>();
-        fifthSemSub.add("Select subject");
-        fifthSemSub.add("Software Engineering");
-        fifthSemSub.add("Web Dev using PHP");
-        fifthSemSub.add("Python");
-        fifthSemSub.add("C A H M");
-        fifthSemSub.add("I O T");
-
-        // Sixth sem list --------------------------------------------------------------------------
-        sixthSemSub = new ArrayList<>();
-        sixthSemSub.add("Select subject");
-        sixthSemSub.add("Android Development");
-        sixthSemSub.add("Cloud Computing");
-        sixthSemSub.add("I M E D");
-        sixthSemSub.add("Advance Java");
-        sixthSemSub.add("M L & D S");
-        sixthSemSub.add(".NET");
 
         listLang = new ArrayList<>();
         listLang.add("Select Language");
         listLang.add("English");
         listLang.add("Hindi");
 
-        adapter_sem = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listSem);
-        spSem.setAdapter(adapter_sem);
+        branchList = new ArrayList<>();
+        branchList.add("Select branch");
+        branchList.add("C S E");
+        branchList.add("I C");
+        branchList.add("E C");
+        branchList.add("I T");
 
-        adapter_lang = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listLang);
-        spLang.setAdapter(adapter_lang);
+        semList = new ArrayList<>();
+        semList.add("Select semester");
+        semList.add("First sem");
+        semList.add("Second sem");
+        semList.add("Third sem");
+        semList.add("Fourth sem");
+        semList.add("Fifth sem");
+        semList.add("Sixth sem");
 
-        spSem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        branchAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, branchList);
+        spBranch.setAdapter(branchAdapter);
+
+        semAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, defaultSem);
+        spSem.setAdapter(semAdapter);
+
+        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, defaultSub);
+        spSub.setAdapter(subAdapter);
+
+
+        spBranch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position == 0) {
-                    adapter_sub = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, defaultSub);
-                    spSub.setAdapter(adapter_sub);
+                    selectedBranch = "none";
+                    semAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, defaultSem);
+                    spSem.setAdapter(semAdapter);
                 }
-
-                if (position == 1) {
-                    adapter_sub = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, firstSemSub);
-                    spSub.setAdapter(adapter_sub);
+                else if(position == 1) {
+                    selectedBranch = "C S E";
+                    semAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, semList);
+                    spSem.setAdapter(semAdapter);
                 }
-                if (position == 2) {
-                    adapter_sub = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, secondSemSub);
-                    spSub.setAdapter(adapter_sub);
+                else if(position == 2) {
+                    selectedBranch = "I C";
+                    semAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, semList);
+                    spSem.setAdapter(semAdapter);
                 }
-                if (position == 3) {
-                    adapter_sub = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, thirdSemSub);
-                    spSub.setAdapter(adapter_sub);
+                else if(position == 3) {
+                    selectedBranch = "E C";
+                    semAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, semList);
+                    spSem.setAdapter(semAdapter);
                 }
-                if (position == 4) {
-                    adapter_sub = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, fourthSemSub);
-                    spSub.setAdapter(adapter_sub);
-                }
-                if (position == 5) {
-                    adapter_sub = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, fifthSemSub);
-                    spSub.setAdapter(adapter_sub);
-                }
-                if (position == 6) {
-                    adapter_sub = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, sixthSemSub);
-                    spSub.setAdapter(adapter_sub);
+                else if(position == 4) {
+                    selectedBranch = "I T";
+                    semAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, semList);
+                    spSem.setAdapter(semAdapter);
                 }
 
             }
@@ -200,6 +155,343 @@ public class UploadEbooks extends AppCompatActivity {
 
             }
         });
+
+
+        spSem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                if(position == 0) {
+                    subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, defaultSub);
+                    spSub.setAdapter(subAdapter);
+                }
+                else if (position == 1) {
+
+                    if(selectedBranch.equals("C S E")) {
+                        firstSemSub.add("Select subject");
+                        firstSemSub.add("Math-I");
+                        firstSemSub.add("Communication-I");
+                        firstSemSub.add("Physics-I");
+                        firstSemSub.add("Chemistry");
+                        firstSemSub.add("F C I T");
+                        firstSemSub.add("Technical Drawing");
+                        firstSemSub.add("Workshop Practice");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, firstSemSub);
+                        spSub.setAdapter(subAdapter);
+
+                    }
+                    else if(selectedBranch.equals("I C")) {
+                        firstSemSub.add("Select subject");
+                        firstSemSub.add("Communication-I");
+                        firstSemSub.add("Math-I");
+                        firstSemSub.add("Physics-I");
+                        firstSemSub.add("Chemistry");
+                        firstSemSub.add("Engineering Drawing");
+                        firstSemSub.add("E M M");
+                        firstSemSub.add("Workshop-I");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, firstSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I T")) {
+                        firstSemSub.add("Select subject");
+                        firstSemSub.add("Math-I");
+                        firstSemSub.add("Communication-I");
+                        firstSemSub.add("Physics-I");
+                        firstSemSub.add("Chemistry");
+                        firstSemSub.add("F C I T");
+                        firstSemSub.add("Technical Drawing");
+                        firstSemSub.add("Workshop Practice");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, firstSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("E C")) {
+                        firstSemSub.add("Select subject");
+                        firstSemSub.add("Math-I");
+                        firstSemSub.add("Communication-I");
+                        firstSemSub.add("Physics-I");
+                        firstSemSub.add("Chemistry");
+                        firstSemSub.add("Engineering Drawing");
+                        firstSemSub.add("E M M");
+                        firstSemSub.add("Workshop-I");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, firstSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+
+                }
+                else if(position == 2) {
+
+                    if(selectedBranch.equals("C S E")) {
+                        secondSemSub.add("Select subject");
+                        secondSemSub.add("Math-II");
+                        secondSemSub.add("Physics-II");
+                        secondSemSub.add("B E E E");
+                        secondSemSub.add("Multimedia & Animation");
+                        secondSemSub.add("Programming using C");
+                        secondSemSub.add("O A T");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, secondSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I C")) {
+                        secondSemSub.add("Select subject");
+                        secondSemSub.add("Math-II");
+                        secondSemSub.add("Physics-II");
+                        secondSemSub.add("B I T");
+                        secondSemSub.add("EE-I");
+                        secondSemSub.add("E C D");
+                        secondSemSub.add("Workshop-II");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, secondSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I T")) {
+                        secondSemSub.add("Select subject");
+                        secondSemSub.add("Math-II");
+                        secondSemSub.add("Physics-II");
+                        secondSemSub.add("B E E E");
+                        secondSemSub.add("Multimedia & Animation");
+                        secondSemSub.add("Programming using C");
+                        secondSemSub.add("O A T");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, secondSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("E C")) {
+                        secondSemSub.add("Select subject");
+                        secondSemSub.add("Math-II");
+                        secondSemSub.add("Physics-II");
+                        secondSemSub.add("B I T");
+                        secondSemSub.add("EE-I");
+                        secondSemSub.add("E C D");
+                        secondSemSub.add("Workshop-II");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, secondSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                }
+                else if(position == 3) {
+
+                    if(selectedBranch.equals("C S E")) {
+                        thirdSemSub.add("Select subject");
+                        thirdSemSub.add("Math-III");
+                        thirdSemSub.add("I & W T");
+                        thirdSemSub.add("EVS");
+                        thirdSemSub.add("D C C N");
+                        thirdSemSub.add("DS using C");
+                        thirdSemSub.add("Digital Electronic");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, thirdSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I C")) {
+                        thirdSemSub.add("Select subject");
+                        thirdSemSub.add("Math-III");
+                        thirdSemSub.add("EE-II");
+                        thirdSemSub.add("E V S");
+                        thirdSemSub.add("E D C");
+                        thirdSemSub.add("Electronic Workshop");
+                        thirdSemSub.add("Transducer & Application");
+                        thirdSemSub.add("U H V");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, thirdSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I T")) {
+                        thirdSemSub.add("Select subject");
+                        thirdSemSub.add("Math-III");
+                        thirdSemSub.add("I & W T");
+                        thirdSemSub.add("EVS");
+                        thirdSemSub.add("D C C N");
+                        thirdSemSub.add("DS using C");
+                        thirdSemSub.add("C A H M");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, thirdSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("E C")) {
+                        thirdSemSub.add("Select subject");
+                        thirdSemSub.add("Math-III");
+                        thirdSemSub.add("EE-II");
+                        thirdSemSub.add("E V S");
+                        thirdSemSub.add("E D C");
+                        thirdSemSub.add("Electronic Workshop");
+                        thirdSemSub.add("Digital Electronic");
+                        thirdSemSub.add("U H V");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, thirdSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                }
+                else if(position == 4) {
+
+                    if(selectedBranch.equals("C S E")) {
+                        fourthSemSub.add("Select subject");
+                        fourthSemSub.add("Communication-II");
+                        fourthSemSub.add("D B M S");
+                        fourthSemSub.add("OOP using Java");
+                        fourthSemSub.add("O S");
+                        fourthSemSub.add("E-com");
+                        fourthSemSub.add("Energy Conservation");
+                        fourthSemSub.add("U H V");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, fourthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I C")) {
+                        fourthSemSub.add("Select subject");
+                        fourthSemSub.add("Communication-II");
+                        fourthSemSub.add("Principles of DE");
+                        fourthSemSub.add("N F T L");
+                        fourthSemSub.add("E I M");
+                        fourthSemSub.add("Process Instrumentation");
+                        fourthSemSub.add("Energy Conservation");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, fourthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I T")) {
+                        fourthSemSub.add("Select subject");
+                        fourthSemSub.add("Communication-II");
+                        fourthSemSub.add("D B M S");
+                        fourthSemSub.add("OOP using Java");
+                        fourthSemSub.add("O S");
+                        fourthSemSub.add("E-com");
+                        fourthSemSub.add("Energy Conservation");
+                        fourthSemSub.add("U H V");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, fourthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("E C")) {
+                        fourthSemSub.add("Select subject");
+                        fourthSemSub.add("Communication-II");
+                        fourthSemSub.add("I E T");
+                        fourthSemSub.add("N F T L");
+                        fourthSemSub.add("E I M");
+                        fourthSemSub.add("P C E");
+                        fourthSemSub.add("Energy Conservation");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, fourthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                }
+                else if(position == 5) {
+
+                    if(selectedBranch.equals("C S E")) {
+                        fifthSemSub.add("Select subject");
+                        fifthSemSub.add("Software Engineering");
+                        fifthSemSub.add("Web Dev using PHP");
+                        fifthSemSub.add("Python");
+                        fifthSemSub.add("C A H M");
+                        fifthSemSub.add("I O T");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, fifthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I C")) {
+                        fifthSemSub.add("Select subject");
+                        fifthSemSub.add("I M E D");
+                        fifthSemSub.add("Microprocessor");
+                        fifthSemSub.add("Industrial Control");
+                        fifthSemSub.add("S T R D");
+                        fifthSemSub.add("Programming in C");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, fifthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I T")) {
+                        fifthSemSub.add("Select subject");
+                        fifthSemSub.add("Software Engineering");
+                        fifthSemSub.add("Web Dev using PHP");
+                        fifthSemSub.add("Python");
+                        fifthSemSub.add("IS & IT Laws");
+                        fifthSemSub.add("I O T");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, fifthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("E C")) {
+                        fifthSemSub.add("Select subject");
+                        fifthSemSub.add("I M E D");
+                        fifthSemSub.add("Microprocessor");
+                        fifthSemSub.add("O F C");
+                        fifthSemSub.add("Consumer Electronic");
+                        fifthSemSub.add("Programming in C");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, fifthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                }
+                else if(position == 6) {
+
+                    if(selectedBranch.equals("C S E")) {
+                        sixthSemSub.add("Select subject");
+                        sixthSemSub.add("Android Development");
+                        sixthSemSub.add("Cloud Computing");
+                        sixthSemSub.add("I M E D");
+                        sixthSemSub.add("Advance Java");
+                        sixthSemSub.add("M L & D S");
+                        sixthSemSub.add("DOT NET");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, sixthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I C")) {
+                        sixthSemSub.add("Select subject");
+                        sixthSemSub.add("Process Control");
+                        sixthSemSub.add("Microcontrollers");
+                        sixthSemSub.add("B M I");
+                        sixthSemSub.add("Specialised Instruments");
+                        sixthSemSub.add("Robotics");
+                        sixthSemSub.add("Neural Networks");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, sixthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("I T")) {
+                        sixthSemSub.add("Select subject");
+                        sixthSemSub.add("Android Development");
+                        sixthSemSub.add("Cloud Computing");
+                        sixthSemSub.add("I M E D");
+                        sixthSemSub.add("Advance Java");
+                        sixthSemSub.add("Big Data");
+                        sixthSemSub.add("M L & D S");
+                        sixthSemSub.add("Digital Image Processing");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, sixthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                    else if(selectedBranch.equals("E C")) {
+                        sixthSemSub.add("Select subject");
+                        sixthSemSub.add("Microwave");
+                        sixthSemSub.add("Microcontrollers");
+                        sixthSemSub.add("W M C S");
+                        sixthSemSub.add("Control System");
+                        sixthSemSub.add("Medical Electronics");
+                        sixthSemSub.add("Computer Networks");
+
+                        subAdapter = new ArrayAdapter<>(UploadEbooks.this, android.R.layout.simple_spinner_dropdown_item, sixthSemSub);
+                        spSub.setAdapter(subAdapter);
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+        adapterLang = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, listLang);
+        spLang.setAdapter(adapterLang);
 
 
         selectPdf.setOnClickListener(new View.OnClickListener() {
@@ -241,6 +533,14 @@ public class UploadEbooks extends AppCompatActivity {
                         return;
                     }
 
+                    if(pdfTitle.getText().toString().length() > 25) {
+                        pdfTitle.setError("Title must be less than 25 character");
+                        Toast.makeText(UploadEbooks.this, "Title must be less than 25 character", Toast.LENGTH_SHORT).show();
+                        pdfTitle.requestFocus();
+                        return;
+
+                    }
+
                     if(pdfDesc.getText().toString().equals("")) {
                         pdfDesc.setError("This field is required");
                         Toast.makeText(UploadEbooks.this, "Description is required", Toast.LENGTH_SHORT).show();
@@ -248,9 +548,31 @@ public class UploadEbooks extends AppCompatActivity {
                         return;
                     }
 
+                    if(inputContributorName.getText().toString().isEmpty()) {
+                        inputContributorName.setError("This field is required");
+                        Toast.makeText(UploadEbooks.this, "Please fill contributor name", Toast.LENGTH_SHORT).show();
+                        inputContributorName.requestFocus();
+                        return;
+                    }
+
+                    if(inputContributorName.getText().toString().length() > 15) {
+                        inputContributorName.setError("No more than 15 character");
+                        Toast.makeText(UploadEbooks.this, "Contributor name must be less than 15 character", Toast.LENGTH_SHORT).show();
+                        inputContributorName.requestFocus();
+                        return;
+                    }
+
                     TextView sem_text = ((TextView)spSem.getSelectedView());
                     TextView sub_text = ((TextView)spSub.getSelectedView());
                     TextView lang_text = ((TextView)spLang.getSelectedView());
+                    TextView branch_text = ((TextView)spBranch.getSelectedView());
+
+                    if(branch_text.getText().toString().equals("Select branch")) {
+                        branch_text.setError("Plz select branch");
+                        Toast.makeText(UploadEbooks.this, "Please select branch", Toast.LENGTH_SHORT).show();
+                        spBranch.requestFocus();
+                        return;
+                    }
 
                     if(sem_text.getText().toString().equals("Select semester")) {
                         sem_text.setError("Plz select semester");
@@ -279,13 +601,37 @@ public class UploadEbooks extends AppCompatActivity {
                     sem = sem_text.getText().toString();
                     sub = sub_text.getText().toString();
                     lang = lang_text.getText().toString();
+                    branch = branch_text.getText().toString();
+                    contributorName = inputContributorName.getText().toString();
 
 
                     Log.d("jayant", title);
                     Log.d("jayant", desc);
+                    Log.d("jayant", branch);
                     Log.d("jayant", sem);
                     Log.d("jayant", sub);
                     Log.d("jayant", lang);
+                    Log.d("jayant", contributorName);
+
+
+                    String brch = "default_branch";
+                    if(branch.equals("C S E")) {
+                        brch = "cse_books";
+                    }
+                    else if(branch.equals("I T")) {
+                        brch = "it_books";
+                    }
+                    else if(branch.equals("E C")) {
+                        brch = "ec_books";
+                    }
+                    else if(branch.equals("I C")) {
+                        brch = "ic_books";
+                    }
+
+//                    Log.d("jayant", "branch =============" + brch);
+
+                    databaseReference = FirebaseDatabase.getInstance().getReference(brch);
+                    storageReference = FirebaseStorage.getInstance().getReference(brch);
 
 
                     uploadPdfToFirebase(data.getData());
@@ -295,7 +641,6 @@ public class UploadEbooks extends AppCompatActivity {
 
         }
     }
-
 
 
     private void uploadPdfToFirebase(Uri data) {
@@ -330,7 +675,7 @@ public class UploadEbooks extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                                String name = snapshot.child("name").getValue(String.class);
 
-                                PdfData pdfData = new PdfData(title, desc, sem, sub, lang, uri.toString(), date, time);
+                                PdfData pdfData = new PdfData(title, desc, contributorName, sem, sub, lang, uri.toString(), date, time);
 
                                 databaseReference.child(sem).child(sub).push().setValue(pdfData)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -369,8 +714,6 @@ public class UploadEbooks extends AppCompatActivity {
                 pd.setMessage("Uploading Progress..." + (int) progress + "%");
             }
         });
-
-
 
     }
 

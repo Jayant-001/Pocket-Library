@@ -22,7 +22,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void run() {
 
                 try {
-                    sleep(5000);
+                    sleep(3000);
                 }
 
                 catch (Exception e) {

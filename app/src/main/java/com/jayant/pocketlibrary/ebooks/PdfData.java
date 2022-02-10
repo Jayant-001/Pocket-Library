@@ -2,14 +2,15 @@ package com.jayant.pocketlibrary.ebooks;
 
 public class PdfData {
 
-    String title, desc, sem, sub, lang, url, date, time;
+    String title, desc, contributorName, sem, sub, lang, url, date, time;
 
     public PdfData() {
     }
 
-    public PdfData(String title, String desc, String sem, String sub, String lang, String url, String date, String time) {
+    public PdfData(String title, String desc, String contributorName, String sem, String sub, String lang, String url, String date, String time) {
         this.title = title;
         this.desc = desc;
+        this.contributorName = contributorName;
         this.sem = sem;
         this.sub = sub;
         this.lang = lang;
@@ -23,6 +24,7 @@ public class PdfData {
         return "PdfData{" +
                 "title='" + title + '\'' +
                 ", desc='" + desc + '\'' +
+                ", contributorName='" + contributorName + '\'' +
                 ", sem='" + sem + '\'' +
                 ", sub='" + sub + '\'' +
                 ", lang='" + lang + '\'' +
@@ -62,6 +64,14 @@ public class PdfData {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getContributorName() {
+        return contributorName;
+    }
+
+    public void setContributorName(String contributorName) {
+        this.contributorName = contributorName;
     }
 
     public String getSem() {

@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/textView3"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:background="@drawable/rec_second"
         android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -20,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="This Application is developed by \nCode Stalker team"
-            android:textSize="25sp"
-            android:textStyle="italic"
+            android:textSize="24sp"
+            android:textStyle="italic|bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,31 +31,31 @@
     <TextView
         android:id="@+id/about_dev"
         android:layout_width="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textView3"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="About Developers"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:textSize="24sp"
-        android:layout_height="wrap_content"
-        android:text="About Developers"/>
+        app:layout_constraintTop_toBottomOf="@id/textView3" />
 
     <View
         android:id="@+id/div_bar1"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/about_dev"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginHorizontal="30dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_height="1dp"
-        android:background="#66000000"/>
+        android:layout_marginHorizontal="30dp"
+        android:background="#66000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about_dev" />
 
     <LinearLayout
         android:id="@+id/layout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/div_bar1">
@@ -65,39 +65,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Jayant"
-            android:textSize="30sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="[App Developer]"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="C S E"
-            android:textSize="24sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2018-2021"
-            android:textSize="24sp" />
+            android:text="diplomadear001@gmail.com"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
     <View
         android:id="@+id/div_bar"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/layout2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="30dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_height="1dp"
-        android:background="#66000000"/>
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:background="#66000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout2" />
 
 
     <LinearLayout
@@ -105,36 +99,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/div_bar">
-
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Achintya"
-            android:textSize="30sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="[UI Designer]"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="C S E"
-            android:textSize="24sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2018-2021"
-            android:textSize="24sp" />
+            android:text="achintyakumarjaiswal@gmail.com"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -142,89 +129,93 @@
     <View
         android:id="@+id/div_bar2"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/layout3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginVertical="20dp"
-        android:layout_marginHorizontal="30dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_height="1dp"
-        android:background="#66000000"/>
-
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:background="#66000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout3" />
 
     <LinearLayout
-        android:id="@+id/layout4"
+        android:id="@+id/layout11"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/div_bar2">
+        app:layout_constraintTop_toBottomOf="@id/div_bar2"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
+        <TextView
+            android:id="@+id/college_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_help" />
+            android:text="College Info -"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/div_bar2" />
+
+
+        <TextView
+            android:id="@+id/college_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sant Ravidas Govt. Polytechnic, \nChakia Chandauli."
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/college_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Help Center"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:text="Branch - CSE"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Batch : 2018-2021"
+            android:textSize="20sp"/>
+
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/div_bar3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:background="#66000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout11" />
 
     <LinearLayout
-        android:id="@+id/ll3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout4">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_user" />
+        app:layout_constraintTop_toBottomOf="@id/div_bar3">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contact Us"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/layout5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll3">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_note" />
+            android:textStyle="bold"
+            android:text="If you got this App helpful,\nBuy a tea for Us ☺"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
+            android:layout_marginTop="6dp"
             android:layout_height="wrap_content"
-            android:text="Terms and Privacy Policy"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="18sp"
+            android:text="@string/upi_jayant_gupta_dln_okaxis"/>
+
 
     </LinearLayout>
 

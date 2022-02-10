@@ -31,11 +31,16 @@ public class BooksActivity extends AppCompatActivity {
         String setSem = sharedPreferences.getString("sem_name", "none");
         String setSub = sharedPreferences.getString("get_subject", "none");
 
+        SharedPreferences preferences = getSharedPreferences("user_data", MODE_PRIVATE);
+        String brch = preferences.getString("branch", "none");
+
+//        Log.d("jaynat", "branch ---------------------- " + brch );
+
 //        String setSem = getIntent().getStringExtra("get_sem");
 //        String setSub = getIntent().getStringExtra("get_subject");
 
-        Log.d("jayant", setSem);
-        Log.d("jayant", setSub);
+//        Log.d("jayant", setSem);
+//        Log.d("jayant", setSub);
 
         pd = new ProgressDialog(this);
         pd.setTitle("loading...");
@@ -45,14 +50,14 @@ public class BooksActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         FirebaseRecyclerOptions<PdfData> options = new FirebaseRecyclerOptions.Builder<PdfData>()
-                .setQuery(FirebaseDatabase.getInstance().getReference().child("cse_books").child(setSem).child(setSub), PdfData.class).build();
+                .setQuery(FirebaseDatabase.getInstance().getReference().child(brch).child(setSem).child(setSub), PdfData.class).build();
 
         adapter = new BookAdapter(options);
         recyclerView.setAdapter(adapter);
 
         pd.dismiss();
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("cse_books");
+        databaseReference = FirebaseDatabase.getInstance().getReference(brch);
 
     }
 
